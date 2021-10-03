@@ -1,14 +1,15 @@
-import { PrismaClient } from '@prisma/client'
+import pkg from '@prisma/client';
+const { PrismaClient } = pkg;
 import express from 'express'
-const bodyParser = require('body-parser')
-const cors = require('cors')
+
+// import * as cors from 'cors'
+
 const port = process.env.port || 4000
 const prisma = new PrismaClient()
 
 const app = express()
 app.use(express.json())
-app.use(cors())
-app.use(bodyParser.json())
+// app.use(cors())
 app.listen(port, () => console.log(`Server listening on port ${port}`))
 
 const getAllTasks = async () => await prisma.task.findMany()
