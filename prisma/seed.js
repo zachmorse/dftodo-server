@@ -2,7 +2,7 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const taskData: Prisma.TaskCreateInput[] = [
+const taskData = [
   {
     description: 'Prisma and Typescript, become one with them',
     status: 'incomplete'
@@ -30,7 +30,7 @@ async function main() {
     })
     console.log(`Created task`, task)
   })
-  
+
   console.log(`Seeding finished.`)
 }
 

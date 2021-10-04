@@ -2,7 +2,10 @@
   "name": "express-prisma-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "node dist/server.js",
+  "engines": {
+    "node": "14.17.6"
+  },
   "type": "module",
   "scripts": {
     "dev": "nodemon server.js",
