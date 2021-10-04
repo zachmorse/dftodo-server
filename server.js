@@ -4,7 +4,7 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
-const port = process.env.port || 4000
+const port = process.env.PORT || 4000
 const prisma = new PrismaClient()
 
 const app = express()
