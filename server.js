@@ -1,5 +1,5 @@
-import pkg from '@prisma/client';
-const { PrismaClient } = pkg;
+import pkg from '@prisma/client'
+const { PrismaClient } = pkg
 import express from 'express'
 
 // import * as cors from 'cors'
@@ -9,7 +9,15 @@ const prisma = new PrismaClient()
 
 const app = express()
 app.use(express.json())
-// app.use(cors())
+// app.use(cors({ credentials: true, origin: true }))
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*') // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+  next()
+})
+
 app.listen(port, () => console.log(`Server listening on port ${port}`))
 
 const getAllTasks = async () => await prisma.task.findMany()
@@ -52,7 +60,8 @@ app.put('/api/tasks/update/status', async (req, res) => {
 })
 
 // delete
-app.delete('/api/tasks/delete/', async (req, res) => {
+app.delete('/api/tasks/delete', async (req, res) => {
+  console.log('REQ>BODY', req.body)
   await prisma.task.delete({
     where: {
       id: req.body.id
