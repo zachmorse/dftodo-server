@@ -1,9 +1,9 @@
 import pkg from '@prisma/client'
 const { PrismaClient } = pkg
 import express from 'express'
+import * as dotenv from 'dotenv'
 
-// import * as cors from 'cors'
-
+dotenv.config()
 const port = process.env.port || 4000
 const prisma = new PrismaClient()
 
