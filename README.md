@@ -1,6 +1,9 @@
-# DF Server
+# Diversyfund Todo Server
 
-Server for Todo app project
+A lightweight todo app, deployed at https://dftodo.surge.sh/. Client code may be found [here](https://github.com/zachmorse/dftodo-client)
 
-Built with Node.js, Prisma ORM, Express and Typescript.
-
+## Technologies
+  - node.js
+  - express
+  - prisma
+  - postgresql
