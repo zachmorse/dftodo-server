@@ -9,7 +9,6 @@ const prisma = new PrismaClient()
 
 const app = express()
 app.use(express.json())
-// app.use(cors({ credentials: true, origin: true }))
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*') // update to match the domain you will make the request from
@@ -22,7 +21,6 @@ app.listen(port, () => console.log(`Server listening on port ${port}`))
 
 const getAllTasks = async () => await prisma.task.findMany()
 
-// routes
 app.get('/api/tasks', async (req, res) => {
   const allTasks = await getAllTasks()
   res.send(allTasks)
@@ -37,31 +35,19 @@ app.post('/api/tasks/create', async (req, res) => {
   res.send(await getAllTasks())
 })
 
-// change description
-app.put('/api/tasks/update/description', async (req, res) => {
-  const { id, description } = req.body
+app.put('/api/tasks/update', async (req, res) => {
+  const { id, description, status } = req.body
   await prisma.task.update({
     where: { id: id },
     data: {
-      description: description
+      description: description,
+      status: status
     }
   })
   res.send(await getAllTasks())
 })
 
-// change status
-app.put('/api/tasks/update/status', async (req, res) => {
-  const { id, status } = req.body
-  await prisma.task.update({
-    where: { id: id },
-    data: { status: status }
-  })
-  res.send(await getAllTasks())
-})
-
-// delete
 app.delete('/api/tasks/delete', async (req, res) => {
-  console.log('REQ>BODY', req.body)
   await prisma.task.delete({
     where: {
       id: req.body.id
