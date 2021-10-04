@@ -22,37 +22,43 @@ app.listen(port, () => console.log(`Server listening on port ${port}`))
 const getAllTasks = async () => await prisma.task.findMany()
 
 app.get('/api/tasks', async (req, res) => {
-  const allTasks = await getAllTasks()
+  const allTasks = await getAllTasks().catch(err => console.log(err))
   res.send(allTasks)
 })
 
 app.post('/api/tasks/create', async (req, res) => {
-  await prisma.task.create({
-    data: {
-      description: req.body.description
-    }
-  })
+  await prisma.task
+    .create({
+      data: {
+        description: req.body.description
+      }
+    })
+    .catch(err => console.log(err))
   res.send(await getAllTasks())
 })
 
 app.put('/api/tasks/update', async (req, res) => {
   const { id, description, status } = req.body
-  await prisma.task.update({
-    where: { id: id },
-    data: {
-      description: description,
-      status: status
-    }
-  })
+  await prisma.task
+    .update({
+      where: { id: id },
+      data: {
+        description: description,
+        status: status
+      }
+    })
+    .catch(err => console.log(err))
   res.send(await getAllTasks())
 })
 
 app.delete('/api/tasks/delete', async (req, res) => {
-  await prisma.task.delete({
-    where: {
-      id: req.body.id
-    }
-  })
+  await prisma.task
+    .delete({
+      where: {
+        id: req.body.id
+      }
+    })
+    .catch(err => console.log(err))
 
   res.send(await getAllTasks())
 })
